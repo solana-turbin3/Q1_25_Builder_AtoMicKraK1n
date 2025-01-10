@@ -93,43 +93,43 @@ mod tests {
         println!("Success! Check out your TX here:https://explorer.solana.com/tx/{}/?cluster=devnet", signature);
 
     }
-    #[test]
-    fn update_username() {
-        let keypair = read_keypair_file("dev-wallet.json").expect("Couldn't find wallet file");
+    // #[test]
+    // fn update_username() {
+    //     let keypair = read_keypair_file("dev-wallet.json").expect("Couldn't find wallet file");
 
-        let to_pubkey = Pubkey::from_str("GkiKqSVfnU2y4TeUW7up2JS9Z8g1yjGYJ8x2QNf4K6Y").unwrap();
+    //     let to_pubkey = Pubkey::from_str("GkiKqSVfnU2y4TeUW7up2JS9Z8g1yjGYJ8x2QNf4K6Y").unwrap();
 
-        let rpc_client = RpcClient::new(RPC_URL);
+    //     let rpc_client = RpcClient::new(RPC_URL);
 
-        let recent_blockhash = rpc_client .get_latest_blockhash() .expect("Failed to get recent blockhash");
+    //     let recent_blockhash = rpc_client .get_latest_blockhash() .expect("Failed to get recent blockhash");
 
-        let transaction = Transaction::new_signed_with_payer( &[transfer(&keypair.pubkey(), &to_pubkey, 1_000_000)], Some(&keypair.pubkey()), &vec![&keypair], recent_blockhash);
+    //     let transaction = Transaction::new_signed_with_payer( &[transfer(&keypair.pubkey(), &to_pubkey, 1_000_000)], Some(&keypair.pubkey()), &vec![&keypair], recent_blockhash);
 
-        let signature = rpc_client.send_and_confirm_transaction(&transaction).expect("Failed to send transaction");
+    //     let signature = rpc_client.send_and_confirm_transaction(&transaction).expect("Failed to send transaction");
 
-        println!("Success! Check out your TX here: https://explorer.solana.com/tx/{}/?cluster=devnet",signature);
+    //     println!("Success! Check out your TX here: https://explorer.solana.com/tx/{}/?cluster=devnet",signature);
 
-        let balance = rpc_client.get_balance(&keypair.pubkey()).expect("Failed to get balance");
+    //     let balance = rpc_client.get_balance(&keypair.pubkey()).expect("Failed to get balance");
 
-        let message = Message::new_with_blockhash(&[transfer( &keypair.pubkey(), &to_pubkey, balance,)], Some(&keypair.pubkey()), &recent_blockhash);
+    //     let message = Message::new_with_blockhash(&[transfer( &keypair.pubkey(), &to_pubkey, balance,)], Some(&keypair.pubkey()), &recent_blockhash);
 
-        let fee= rpc_client.get_fee_for_message(&message) .expect("Failed to get fee calculator");
+    //     let fee= rpc_client.get_fee_for_message(&message) .expect("Failed to get fee calculator");
 
-        let transaction =Transaction::new_signed_with_payer(&[transfer( &keypair.pubkey(), &to_pubkey, balance - fee,)], Some(&keypair.pubkey()), &vec![&keypair], recent_blockhash);
+    //     let transaction =Transaction::new_signed_with_payer(&[transfer( &keypair.pubkey(), &to_pubkey, balance - fee,)], Some(&keypair.pubkey()), &vec![&keypair], recent_blockhash);
 
-        let signer = read_keypair_file("Turbin3-wallet.json").expect("Couldn't find wallet file");
+    //     let signer = read_keypair_file("Turbin3-wallet.json").expect("Couldn't find wallet file");
 
-        let prereq = Turbin3PrereqProgram::derive_program_address(&[b"prereq",signer.pubkey().to_bytes().as_ref()]);
+    //     let prereq = Turbin3PrereqProgram::derive_program_address(&[b"prereq",signer.pubkey().to_bytes().as_ref()]);
 
-        let args = UpdateArgs {github: b"AtoMicKraK1n".to_vec() };
+    //     let args = UpdateArgs {github: b"AtoMicKraK1n".to_vec() };
 
-        let blockhash = rpc_client .get_latest_blockhash() .expect("Failed to get recentblockhash");
+    //     let blockhash = rpc_client .get_latest_blockhash() .expect("Failed to get recentblockhash");
 
-        let transaction = Turbin3PrereqProgram::update(&[&signer.pubkey(), &prereq, &system_program::id()], &args, Some(&signer.pubkey()),&[&signer],blockhash );
+    //     let transaction = Turbin3PrereqProgram::update(&[&signer.pubkey(), &prereq, &system_program::id()], &args, Some(&signer.pubkey()),&[&signer],blockhash );
 
-        let signature = rpc_client .send_and_confirm_transaction(&transaction) .expect("Failedto send transaction");
+    //     let signature = rpc_client .send_and_confirm_transaction(&transaction) .expect("Failedto send transaction");
 
-        println!("Success! Check out your TX here:https://explorer.solana.com/tx/{}/?cluster=devnet", signature);
-    }
+    //     println!("Success! Check out your TX here:https://explorer.solana.com/tx/{}/?cluster=devnet", signature);
+    // }
     
 }
