@@ -2,7 +2,7 @@ mod programs;
 #[cfg(test)]
 
 mod tests {
-    use crate::programs::Turbin3_prereq::{Turbin3PrereqProgram, CompleteArgs,UpdateArgs};
+    use crate::programs::Turbin3_prereq::{Turbin3PrereqProgram, CompleteArgs};
     use solana_sdk::{self, system_program};
     use solana_program::{pubkey::Pubkey,system_instruction::transfer};
     use solana_sdk::{signature::{Keypair, Signer, read_keypair_file}, transaction::Transaction, message::Message};
