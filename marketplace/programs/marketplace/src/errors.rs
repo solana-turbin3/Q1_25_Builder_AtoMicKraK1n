@@ -2,6 +2,8 @@ use anchor_lang::error_code;
 
 #[error_code]
 pub enum MarketplaceError{
-    #[msg("Name must be at least 1 character long")]
+    #[msg("The given name is too long")]
     NameTooLong,
+    #[msg("The given collection does not exist")]
+    InvalidCollection,
 }

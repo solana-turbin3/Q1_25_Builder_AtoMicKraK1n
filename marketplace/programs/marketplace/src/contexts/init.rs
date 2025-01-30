@@ -43,10 +43,9 @@ impl<'info> Initialize<'info> {
             fee,
             bump: bumps.marketplace,
             treasury_bump: bumps.treasury,
-            rewards_bump: bumps.rewards_mint,
+            rewards_mint_bump: bumps.rewards_mint,
             name,
         });
-
         Ok(())
     }
 }
