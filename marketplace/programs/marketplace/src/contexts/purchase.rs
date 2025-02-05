@@ -60,30 +60,73 @@ pub struct Purchase<'info> {
 
 impl<'info> Purchase<'info> {
     pub fn pay(&mut self) -> Result<()> {
-        let cpi_program = self.token_program.to_account_info();
+        let cpi_program = self.system_program.to_account_info();
 
         let cpi_accounts = Transfer {
-            from: self.taker_ata.to_account_info(),
+            from: self.taker.to_account_info(),
             to: self.maker.to_account_info(),
         };
 
         let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
 
-        let fee = self.marketplace.fee as u64;
+        let fee = self.listing.price;
 
         let amount = self.listing.price - fee;
 
         transfer(cpi_ctx, amount)?;
 
-        let cpi_program = self.token_program.to_account_info();
+        let cpi_program = self.system_program.to_account_info();
 
         let cpi_accounts = Transfer {
-            from: self.taker_ata.to_account_info(),
-            to: self.maker.to_account_info(),
+            from: self.taker.to_account_info(),
+            to: self.treasury.to_account_info(),
         };
 
         let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
 
+        transfer(cpi_ctx, fee)?;
+
+        Ok(())
+    }
+
+    pub fn transfer_nft(&mut self) -> Result<()> {
+        let programs = self.token_program.to_account_info();
+
+        let accounts = TransferChecked {
+            from: self.vault.to_account_info(),
+            mint: self.maker_mint.to_account_info(),
+            to: self.taker_ata.to_account_info(),
+            authority: self.listing.to_account_info(),
+        };
+
+        let seeds = &[
+            &b"marketplace"[..],
+            &self.marketplace.key().to_bytes()[..],
+            &self.maker_mint.key().to_bytes()[..],
+            &[self.listing.bump],
+        ];
+        let signer_seeds = &[&seeds[..]];
+
+        let cpi_ctx = CpiContext::new_with_signer(programs, accounts, signer_seeds);
+
+        transfer_checked(cpi_ctx, self.vault.amount, self.maker_mint.decimals)?;
+        Ok(())
+    }
+    // close the account
+    pub fn close_vault_account(&mut self) -> Result<()> {
+        let seeds = &[
+            &b"marketplace"[..],
+            &self.marketplace.key().to_bytes()[..],
+            &self.maker_mint.key().to_bytes()[..],
+            &[self.listing.bump],
+        ];
+        let signer_seeds = &[&seeds[..]];
+
+        let accounts = CloseAccount {
+            account: self.vault.to_account_info(),
+            destination: self.treasury.to_account_info(),
+            authority: self.maker.to_account_info(),
+        };
         Ok(())
     }
 }
