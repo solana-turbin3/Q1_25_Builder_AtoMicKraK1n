@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@solana/web3.js": "^1.75.0",
-    "@types/node": "^18.15.11",
     "bs58": "^6.0.0",
-    "prompt-sync": "^4.2.0",
-    "typescript": "^5.0.4"
+    "prompt-sync": "^4.2.0"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
+    "@types/node": "^22.13.1",
     "@types/prompt-sync": "^4.2.3",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }
