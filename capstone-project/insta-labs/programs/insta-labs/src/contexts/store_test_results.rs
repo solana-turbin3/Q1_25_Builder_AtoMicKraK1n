@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use crate::state::{patient_data::PatientData, test_result::TestResult};
-use crate::error::Errors; // Importing state structures
+use crate::error::Errors; 
 
 #[derive(Accounts)]
 pub struct StoreTestResults<'info> {
