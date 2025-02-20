@@ -3,8 +3,8 @@ use anchor_lang::prelude::*;
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct TestResult {
     pub test_id: String,       // Unique Test ID
-    pub test_type: String,     // Type of test (Blood, Urine, Imaging)
-    pub timestamp: i64,        // Time of test entry
+    pub test_type: String,     // Type of test (Blood)
+    pub timestamp: i64,        
     pub haemoglobin: Option<f32>,  // Hemoglobin Level (g/dL)
     pub rbc_count: Option<f32>,   // Red Blood Cell Count (million/µL)
     pub wbc_count: Option<f32>,   // White Blood Cell Count (thousands/µL)
@@ -19,5 +19,5 @@ pub struct TestResult {
     pub monocytes: Option<f32>,   // Monocyte Count (%)
     pub eosinophils: Option<f32>, // Eosinophil Count (%)
     pub basophils: Option<f32>,   // Basophil Count (%)
-    pub additional_notes: Option<String>, // Optional Notes
+    pub additional_notes: Option<String>, 
 }
