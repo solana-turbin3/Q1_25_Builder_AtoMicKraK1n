@@ -23,26 +23,25 @@ pub mod insta_labs {
     pub fn store_test_results(
         ctx: Context<StoreTestResults>, 
         test_id: String, 
-        test_type: String, 
-        haemoglobin: Option<f32>,
-        rbc_count: Option<f32>,
-        wbc_count: Option<f32>,
-        platelet_count: Option<f32>,
-        hematocrit: Option<f32>,
-        mcv: Option<f32>,
-        mch: Option<f32>,
-        mchc: Option<f32>,
-        rdw: Option<f32>,
-        neutrophils: Option<f32>,
-        lymphocytes: Option<f32>,
-        monocytes: Option<f32>,
-        eosinophils: Option<f32>,
-        basophils: Option<f32>,
-        additional_notes: Option<String>
+        timestamp: i64,
+        haemoglobin: Option<u32>,
+        rbc_count: Option<u32>,
+        wbc_count: Option<u32>,
+        platelet_count: Option<u32>,
+        mcv: Option<u32>,
+        mch: Option<u32>,
+        mchc: Option<u32>,
+        rdw: Option<u32>,
+        neutrophils: Option<u32>,
+        lymphocytes: Option<u32>,
+        monocytes: Option<u32>,
+        eosinophils: Option<u32>,
+        basophils: Option<u32>
+
     ) -> Result<()> {
         store_test_results::store_test_results(
-            ctx, test_id, test_type, haemoglobin, rbc_count, wbc_count, platelet_count, hematocrit, 
-            mcv, mch, mchc, rdw, neutrophils, lymphocytes, monocytes, eosinophils, basophils, additional_notes
+            ctx, test_id, timestamp, haemoglobin, rbc_count, wbc_count, platelet_count, 
+            mcv, mch, mchc, rdw, neutrophils, lymphocytes, monocytes, eosinophils, basophils
         )
     }
 
