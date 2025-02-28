@@ -22,6 +22,7 @@ pub fn store_test_results(
     ctx: Context<StoreTestResults>,
     test_id: String,  
     test_type: String,
+    path_lab_name: String,
     timestamp: i64,
     haemoglobin: Option<u32>,
     rbc_count: Option<u32>,
@@ -47,7 +48,7 @@ pub fn store_test_results(
     require!(ctx.accounts.admin.key() == patient_data.admin, Errors::UnauthorizedAccess);
 
     let haemoglobin_scaled = haemoglobin.map(|value| TestResult::scale_up (value as f32));
-    let rbc_count_scaled = rbc_count.map(|value| TestResult::scale_up (value as f32));
+    let rbc_count_scaled: Option<u32> = rbc_count.map(|value| TestResult::scale_up (value as f32));
     let mcv_scaled = mcv.map(|value| TestResult::scale_up (value as f32));
     let mch_scaled  =mch.map(|value| TestResult::scale_up (value as f32));
     let mchc_scaled = mchc.map(|value| TestResult::scale_up (value as f32));
@@ -71,6 +72,7 @@ pub fn store_test_results(
     patient_data.tests.push(TestResult {
         test_id,
         test_type,
+        path_lab_name,
         timestamp: Clock::get()?.unix_timestamp,
         haemoglobin: haemoglobin_scaled,
         rbc_count: rbc_count_scaled,
